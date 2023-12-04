@@ -10,10 +10,11 @@ function AddTraining (props) {
     const [open, setOpen] = useState(false); //will be used for dialog's visibility
     const [customers, setCustomers] = useState([]); //will be used to show customers in select field
 
-
+    // call getCustomers() when rendering the component first time
     useEffect(() => getCustomers(), []);
     const REST_URL = 'https://traineeapp.azurewebsites.net/api/customers';
 
+    //function to fetch customers from REST API
     const getCustomers = () => {
         fetch(REST_URL)
             .then(response => response.json()) // parse the response as JSON
@@ -50,11 +51,8 @@ function AddTraining (props) {
         <Button variant="contained" onClick={() => setOpen(true)}>Add Training</Button>
         <Dialog 
         open={open} 
-        onClose={handleClose} 
-        aria-labelledby="alert-dialog-title" 
-        aria-describedby="alert-dialog-description">
-            <DialogTitle 
-            id="alert-dialog-title">{"Add Training"}</DialogTitle>
+        onClose={handleClose}>
+            <DialogTitle>{"Add Training"}</DialogTitle>
             <DialogContent>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker 
@@ -85,7 +83,7 @@ function AddTraining (props) {
                 name="customer"
                 value={training.customer}
                 onChange={handleInputChanged}>
-                    {customers.map((customer) => (
+                    {customers.map((customer) => ( //map all customers to select field
                         <MenuItem key={customer.links[0].href} value={customer.links[0].href}>
                             {customer.firstname} {customer.lastname}
                         </MenuItem>

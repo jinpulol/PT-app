@@ -106,13 +106,12 @@ function Customerlist() {
 
 
     return (
-        <>
+        
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '80vh', margin: 0, padding: 0 }}>
-                <div className="ag-theme-material"
-                    style={{ height: 600, width: 1500 }}>
+                <div className="ag-theme-material" style={{ height: 600, width: 1500 }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '10px' }}>
                         <AddCustomer addCustomer={addCustomer} />
-                        <IconButton style={{ display: "flex", justifyContent: "flex-end" }}>
+                        <IconButton style={{ left: 1295 }}>
                             <CSVLink data={csvData} filename='customerdata.csv'>
                                 <FileDownload />
                             </CSVLink>
@@ -134,7 +133,7 @@ function Customerlist() {
                     </Snackbar>
                 </div>
             </div >
-        </>
+       
     )
 }
 export default Customerlist;

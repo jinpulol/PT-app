@@ -29,11 +29,8 @@ function AddCustomer (props) {
         <Button variant="contained" onClick={() => setOpen(true)}>Add Customer</Button>
         <Dialog
             open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description">
-            <DialogTitle 
-            id="alert-dialog-title">{"Add Customer"}</DialogTitle>
+            onClose={handleClose}>
+            <DialogTitle>{"Add Customer"}</DialogTitle>
             <DialogContent>
                 <TextField 
                 label="Firstname" 
