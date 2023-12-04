@@ -32,7 +32,7 @@ function Calendar() {
             } else {
                 title = booking.activity + " / " + booking.customer.firstname + " " + booking.customer.lastname;
             }
-    
+
             return {
                 title: title,
                 start: booking.date
@@ -55,13 +55,13 @@ function Calendar() {
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100vh', margin: 0, padding: 0 }}>
-    <div className="ag-theme-material"
-        style={{ height: 600, width: 1500 }}>
-            <FullCalendar
-                {...options}
-                events={bookings}
-            />
-        </div>
+            <div className="ag-theme-material"
+                style={{ height: 600, width: 1500 }}>
+                <FullCalendar
+                    {...options} // pass the settings
+                    events={bookings}
+                />
+            </div>
         </div>
     )
 }
