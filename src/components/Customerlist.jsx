@@ -17,10 +17,8 @@ function Customerlist() {
 
     //columns for customer table (ag-grid)
     const columns = [
-        {
-            headerName: 'Customer', valueGetter: params =>
-                `${params.data.firstname} ${params.data.lastname}`, sortable: true, filter: true
-        }, //valueGetter is used to combine firstname and lastname
+        { field: 'firstname', sortable: true, filter: true },
+        { field: 'lastname', sortable: true, filter: true },
         { field: 'streetaddress', sortable: true, filter: true },
         { field: 'postcode', sortable: true, filter: true },
         { field: 'city', sortable: true, filter: true },
