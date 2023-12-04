@@ -25,10 +25,11 @@ function Traininglist() {
         { field: 'activity', sortable: true, filter: true },
         {
             headerName: 'Customer', valueGetter: (params) => params.data.customer
-            ? `${params.data.customer.firstname} ${params.data.customer.lastname}`
-            : 'N/D',
-            sortable: true, filter: true},
-        { cellRenderer: params => <Delete color="error" onClick={() => deleteTraining(params)} />, width: 50}
+                ? `${params.data.customer.firstname} ${params.data.customer.lastname}`
+                : 'N/D',
+            sortable: true, filter: true
+        },
+        { cellRenderer: params => <Delete color="error" onClick={() => deleteTraining(params)} />, width: 50 }
     ]
 
     // call getTrainings() when rendering the component first time
@@ -75,36 +76,36 @@ function Traininglist() {
                     setOpen(true);
                     setMsg('Training deleted successfully!');
                 })
-                .catch(error => console.error(error))                   
-                }
+                .catch(error => console.error(error))
         }
+    }
 
-    //todo: delete function doesnt work when customer is null
-    
+    //todo: delete function doesnt work when customer is null -> fix it
+
 
     return (
         <>
-    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100vh', margin: 0, padding: 0 }}>
-    <div className="ag-theme-material"
-        style={{ height: 600, width: 1500 }}>
-                <div style={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
-        <AddTraining addTraining={addTraining} />
-        </div>
-                <AgGridReact
-                    rowData={trainings}
-                    columnDefs={columns}
-                    pagination={true}
-                    paginationPageSize={10}
-                    floatingFilter={true}
-                    suppressCellSelection={true}>
-                </AgGridReact>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={() => setOpen(false)}
-                    message={msg}>
-                </Snackbar>
-            </div>
+            <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100vh', margin: 0, padding: 0 }}>
+                <div className="ag-theme-material"
+                    style={{ height: 600, width: 1500 }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '10px' }}>
+                        <AddTraining addTraining={addTraining} />
+                    </div>
+                    <AgGridReact
+                        rowData={trainings}
+                        columnDefs={columns}
+                        pagination={true}
+                        paginationPageSize={10}
+                        floatingFilter={true}
+                        suppressCellSelection={true}>
+                    </AgGridReact>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={3000}
+                        onClose={() => setOpen(false)}
+                        message={msg}>
+                    </Snackbar>
+                </div>
             </div>
         </>
     );

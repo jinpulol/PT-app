@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import { AgGridReact } from 'ag-grid-react';
-import { Button, Snackbar } from "@mui/material";
-import { Delete } from "@mui/icons-material";
+import { Snackbar, IconButton } from "@mui/material";
+import { Delete, FileDownload } from "@mui/icons-material";
+import { CSVLink } from 'react-csv';
 import AddCustomer from './AddCustomer'
 import EditCustomer from './EditCustomer'
 
@@ -25,8 +26,16 @@ function Customerlist() {
         { field: 'email', sortable: true, filter: true },
         { field: 'phone', sortable: true, filter: true },
         {
-            cellRenderer: params => <EditCustomer updateCustomer={updateCustomer} customer={params.data} />, width: 50},
-        { cellRenderer: params => <Delete color="error" onClick={() => deleteCustomer(params)} />, width: 50}
+            cellRenderer: params => <EditCustomer updateCustomer={updateCustomer} customer={params.data} />, width: 50
+        },
+        { cellRenderer: params => <Delete color="error" onClick={() => deleteCustomer(params)} />, width: 50 }
+    ]
+
+    //data for csv export
+    const csvData = [
+        ['firstname', 'lastname', 'streetaddress', 'postcode', 'city', 'email', 'phone'], //headers
+        ...customers.map(customer =>
+            [customer.firstname, customer.lastname, customer.streetaddress, customer.postcode, customer.city, customer.email, customer.phone]) //data  
     ]
 
     // call getCustomers() when rendering the component first time
@@ -56,12 +65,12 @@ function Customerlist() {
                     getCustomers();
                     setOpen(true);
                     setMsg('Customer added successfully!');
-                } else 
+                } else
                     alert('Something went wrong!')
-            
+
             })
             .catch(error => console.error(error))
-}
+    }
 
     //function to update customer
     const updateCustomer = (customer, link) => {
@@ -75,7 +84,7 @@ function Customerlist() {
                     getCustomers();
                     setOpen(true);
                     setMsg('Customer updated successfully!');
-                } else 
+                } else
                     alert('Something went wrong!')
             })
             .catch(error => console.error(error))
@@ -92,33 +101,40 @@ function Customerlist() {
                 })
                 .catch(error => console.error(error))
         }
-    
+
     }
 
 
-return (
-    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100vh', margin: 0, padding: 0 }}>
-    <div id="myGrid" className="ag-theme-material"
-        style={{ height: 600, width: 1500 }}>
-            <div style={{display: 'flex', justifyContent: 'flex-start', padding: '10px'}}>
-        <AddCustomer addCustomer={addCustomer} />
-        </div>
-        <AgGridReact
-            rowData={customers}
-            columnDefs={columns}
-            pagination={true}
-            paginationPageSize={10}
-            floatingFilter={true}
-            suppressCellSelection={true}>
-        </AgGridReact>
-        <Snackbar
-            open={open}
-            autoHideDuration={3000}
-            onClose={() => setOpen(false)}
-            message={msg}>
-        </Snackbar>
-    </div>
-    </div>
-)
+    return (
+        <>
+            <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '80vh', margin: 0, padding: 0 }}>
+                <div className="ag-theme-material"
+                    style={{ height: 600, width: 1500 }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '10px' }}>
+                        <AddCustomer addCustomer={addCustomer} />
+                        <IconButton style={{ display: "flex", justifyContent: "flex-end" }}>
+                            <CSVLink data={csvData} filename='customerdata.csv'>
+                                <FileDownload />
+                            </CSVLink>
+                        </IconButton>
+                    </div>
+                    <AgGridReact
+                        rowData={customers}
+                        columnDefs={columns}
+                        pagination={true}
+                        paginationPageSize={10}
+                        floatingFilter={true}
+                        suppressCellSelection={true}>
+                    </AgGridReact>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={3000}
+                        onClose={() => setOpen(false)}
+                        message={msg}>
+                    </Snackbar>
+                </div>
+            </div >
+        </>
+    )
 }
 export default Customerlist;
