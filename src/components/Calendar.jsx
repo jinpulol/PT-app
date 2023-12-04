@@ -5,13 +5,15 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
 function Calendar() {
+
+    //state variables
     const [bookings, setBookings] = useState([]);
+
+    // call getTrainings() when rendering the component first time
+    useEffect(() => getTrainings(), []);
     const REST_URL = 'https://traineeapp.azurewebsites.net/gettrainings';
 
-    useEffect(() => {
-        getTrainings();
-    }, []);
-
+    //function to fetch trainings from REST API
     const getTrainings = () => {
         fetch(REST_URL)
             .then(response => response.json())

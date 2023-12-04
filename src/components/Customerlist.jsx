@@ -28,7 +28,9 @@ function Customerlist() {
         {
             cellRenderer: params => <EditCustomer updateCustomer={updateCustomer} customer={params.data} />, width: 50
         },
-        { cellRenderer: params => <Delete color="error" onClick={() => deleteCustomer(params)} />, width: 50 }
+        { 
+            cellRenderer: params => <Delete color="error" onClick={() => deleteCustomer(params)} />, width: 50 
+        }
     ]
 
     //data for csv export
